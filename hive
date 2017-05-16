@@ -1,0 +1,21 @@
+create table if not exists titanic(passangerID int,                  
+    > Survived int,
+    > Pclass int,
+    > Name string,
+    > Sex string,
+    > Age int,
+    > SibSp int,
+    > Parch int,
+    > Ticket string,
+    > Fare string,
+    > Cabin String,
+    > Embarked string)
+    > row format delimited
+    > fields terminated by ','; 
+
+load data local inpath '/home/acadgild/TitanicData.txt' into table titanic;
+
+select Sex,AVG(Age) from titanic where survived == 1 group by Sex;
+
+select * from (select Pclass,COUNT(PassangerID) from titanic where Survived == 1 group by Pclass)pd inner join (select Pclass,COUNT(PassangerID) from titanic where Survived == 0 group by Pclass)ps on pd.Pclass=ps.Pclass;
+
